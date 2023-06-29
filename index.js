@@ -15,7 +15,7 @@ app.use('/files', express.static('public'))
 app.get('/', (req, res) => {
     const {url} = req.query
 
-    if(typeof url !== 'string') return res.status(200).send({success: false})
+    if(typeof url !== 'string' || url === '') return res.status(200).send({success: false})
 
     qr.toFile('./public/qr.png', url, {
         width: 500
