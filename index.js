@@ -17,7 +17,9 @@ app.get('/', (req, res) => {
 
     if(typeof url !== 'string') return res.status(200).send({success: false})
 
-    qr.toFile('./public/qr.png', url)
+    qr.toFile('./public/qr.png', url, {
+        width: 500
+    })
 
     return res.status(200).send({
         success: true,
