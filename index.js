@@ -17,13 +17,15 @@ app.get('/', (req, res) => {
 
     if(typeof url !== 'string' || url === '') return res.status(200).send({success: false})
 
-    qr.toFile('./public/qr.png', url, {
+    let name = Date.now()
+
+    qr.toFile(`./public/${name}.png`, url, {
         width: 500
     })
 
     return res.status(200).send({
         success: true,
-        url: 'http://74.208.129.103:3333/files/qr.png'
+        url: `http://74.208.129.103:3333/files/${name}.png`
     })
 })
 
