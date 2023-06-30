@@ -1,6 +1,10 @@
-import express from 'express'
-import cors from 'cors'
-import qr from 'qrcode'
+const express = require('express')
+const cors = require('cors')
+const { generateQR } = require('./src/utils/generateqr')
+const path = require('path')
+const multer = require('multer')
+const exp = require('constants')
+
 
 const app = express()
 
@@ -10,18 +14,25 @@ app.use(cors({
     methods: '*',
     origin: '*'
 }))
+app.use(express.urlencoded({extended: true}))
 app.use('/files', express.static('public'))
 
-app.get('/', (req, res) => {
+const upload = multer().single('file')
+
+app.post('/', upload, (req, res) => {
     const {url} = req.query
+    const file = req.file
 
     if(typeof url !== 'string' || url === '') return res.status(200).send({success: false})
 
     let name = Date.now()
 
-    qr.toFile(`./public/${name}.png`, url, {
-        width: 500
-    })
+    if(file){
+        generateQR(url, path.join(__dirname, `./public/${name}.png`), file.buffer)
+    } else {
+        generateQR(url, path.join(__dirname, `./public/${name}.png`))
+    }
+
 
     return res.status(200).send({
         success: true,
