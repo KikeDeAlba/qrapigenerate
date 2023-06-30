@@ -37,9 +37,7 @@ const generateQR = async (data, output, userlogo) => {
         }
 
         // Guardar la imagen resultante con el código QR y el logo
-        await canvas.writeAsync(output);
-
-        console.log('QR code with logo generated successfully!');
+        return await canvas.writeAsync(output);
     } catch (error) {
         console.error('Error generating QR code with logo:', error);
     }

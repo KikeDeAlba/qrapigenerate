@@ -19,7 +19,7 @@ app.use('/files', express.static('public'))
 
 const upload = multer().single('file')
 
-app.post('/', upload, (req, res) => {
+app.post('/', upload, async (req, res) => {
     const {url} = req.query
     const file = req.file
 
@@ -28,9 +28,9 @@ app.post('/', upload, (req, res) => {
     let name = Date.now()
 
     if(file){
-        generateQR(url, path.join(__dirname, `./public/${name}.png`), file.buffer)
+        await generateQR(url, path.join(__dirname, `./public/${name}.png`), file.buffer)
     } else {
-        generateQR(url, path.join(__dirname, `./public/${name}.png`))
+        await generateQR(url, path.join(__dirname, `./public/${name}.png`))
     }
 
 
