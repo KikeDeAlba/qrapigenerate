@@ -3,8 +3,8 @@ const cors = require('cors')
 const { generateQR } = require('./src/utils/generateqr')
 const path = require('path')
 const multer = require('multer')
-const exp = require('constants')
-
+const https = require('https')
+const fs = require('fs')
 
 const app = express()
 
@@ -40,6 +40,9 @@ app.post('/', upload, async (req, res) => {
     })
 })
 
-app.listen(3333, () => {
+https.createServer({
+    key: fs.readFileSync('ssl.key'),
+    cert: fs.readFileSync('ssl.cert'),
+}, app).listen(3333, () => {
     console.log('Server started on port 3333')
 })
