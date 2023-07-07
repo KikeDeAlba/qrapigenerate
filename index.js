@@ -36,7 +36,7 @@ app.post('/', upload, async (req, res) => {
 
     return res.status(200).send({
         success: true,
-        url: `https://74.208.129.103:3333/files/${name}.png`
+        url: `https://vps.focograficomx.com:3333/files/${name}.png`
     })
 })
 
